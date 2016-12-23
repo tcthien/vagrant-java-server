@@ -1,0 +1,4 @@
+java-dev-environment/.bashrc
+java-dev-environment/.vagrant
+java-dev-environment/jdk*
+java-dev-environment/java-dev-env.box

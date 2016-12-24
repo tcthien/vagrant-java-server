@@ -4,7 +4,7 @@
       "vcs": true
     },
     "variables": {
-        "atlas_username": "{{env `ATLAS_USERNAME`}}",
+        "atlas_username": "tcthien",
         "atlas_name": "{{env `ATLAS_NAME`}}"
     },
     "provisioners": [
@@ -63,7 +63,7 @@
         {
             "type": "atlas",
             "only": ["virtualbox-iso"],
-            "artifact": "{{user `atlas_username`}}/{{user `atlas_name`}}",
+            "artifact": "tcthien/java-dev-server",
             "artifact_type": "vagrant.box",
             "metadata": {
                 "provider": "virtualbox",

@@ -15,7 +15,7 @@
                 "scripts/virtualbox.sh",
                 "scripts/vagrant.sh",
                 "scripts/dep.sh",
-                "../provision.sh",
+                "scripts/provision.sh",
                 "scripts/cleanup.sh",
                 "scripts/zerodisk.sh"
             ],

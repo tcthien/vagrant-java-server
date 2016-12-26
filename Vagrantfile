@@ -50,7 +50,7 @@ Vagrant.configure(2) do |config|
   #
      # Customize the amount of memory on the VM:
      vb.memory = "4096"
-     vb.name = "java-server"
+     vb.name = "java-dev-server"
    end
   #
   # View the documentation for the provider you are using for more

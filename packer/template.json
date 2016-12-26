@@ -13,9 +13,9 @@
             "scripts": [
                 "scripts/base.sh",
                 "scripts/virtualbox.sh",
-                "scripts/vmware.sh",
                 "scripts/vagrant.sh",
                 "scripts/dep.sh",
+                "../provision.sh",
                 "scripts/cleanup.sh",
                 "scripts/zerodisk.sh"
             ],
@@ -67,8 +67,7 @@
             "artifact_type": "vagrant.box",
             "metadata": {
                 "provider": "virtualbox",
-                "version": "0.0.3",
-                "description_markdown": "Create server development environment for java developer includging:\n- Java 7 or 8 (switch using jenv global <1.7 or 1.8>\n- Mysql server\n- Nginx server\n- Common tool: git, svn, mc, vim\n- Java tool: gradle, mvn, ant\n- Nodejs, yeoman\n- Port forwarding:\n    + http 8080 (host) -> 80 (guest)\n    + https 4443 (host) -> 443 (guest)\n- Enabled private network interface (guest -> 192.168.33.10)\n- Current host directory mounted in guest at /vagrant\n\nAccount to login: vagrant/vagrant\n\nFor more detail, please checkout https://github.com/tcthien/vagrant-boxes/tree/master/java-dev-environment\n\nThank you https://github.com/ssledz for initial version."
+                "version": "0.0.1"
             }
         }]
     ]

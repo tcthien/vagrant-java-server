@@ -61,7 +61,10 @@ installPackages()
   indent; installPackage git
   indent; installPackage mc
   indent; installPackage apg
+  indent; installPackage curl
+  indent; installPackage wget
   installMysql
+
 }
 
 createDirs()
@@ -260,6 +263,41 @@ installingServers()
   #installingTomcat
 }
 
+installNodeJsYeoman()
+{
+    nodejs="node-v7.3.0-linux-x64.tar.gz"
+    nodejsdir="node-v7.3.0-linux-x64"
+    cd $VAGRANT_DIR
+    #download nodejs
+    if [ ! -e $nodejs ] 
+        then
+            indent; echo "There is no $nodejs"
+            indent; indent; download "$nodejs" "https://nodejs.org/dist/v7.3.0/$nodejs"
+        else
+            indent; echo "$nodejs is available"
+    fi
+    cp -r $VAGRANT_DIR/$nodejs $HOME_BIN_DIR
+    
+    cd $HOME_BIN_DIR
+    #install nodejs
+    indent; echo "Extracting $file"
+    tar xvzf $nodejs >/dev/null 2>&1
+    indent; echo 'Cleaning'
+    rm $nodejs
+  
+    #update bashrc
+    indent; echo 'Updating .bashrc'
+    cat $VAGRANT_DIR/bashrc.template >> $HOME_DIR/.bashrc
+    source $HOME_DIR/.bashrc
+    
+    export PATH="$HOME_BIN_DIR/node-v7.3.0-linux-x64/lib/node_modules/:$HOME_BIN_DIR/node-v7.3.0-linux-x64/bin/:$PATH"
+    indent; echo $PATH
+    
+    #install yeoman
+    indent; echo 'Installing yeoman'
+    npm install -g yo
+}
+
 run() {
   createDirs
   installPackages
@@ -275,6 +313,9 @@ run() {
   updateBashrc
   installRuntimes
   installingServers
+  
+  #install nodejs, yeoman
+  installNodeJsYeoman
 }
 
 

@@ -1,5 +1,16 @@
 Creates server development environment for java developer
 
+## Prerequisite
+* Install [Virtualbox](https://www.virtualbox.org/wiki/Downloads)
+* Install [Vagrant](https://www.vagrantup.com/downloads.html)
+* Navigate to project you would like to work
+```
+    cd ~/myWorkingProject
+    vagrant init tcthien/java-dev-server
+    vagrant up
+```
+
+## Environment for Java Developer
 * Download JDK directly
 ```
     #java8

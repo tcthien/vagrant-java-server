@@ -34,8 +34,8 @@ download()
   local url=$2
   local file=$1
   echo "Downloading $file"
-  #wget --progress=dot $3 $url >/dev/null 2>&1
-  wget --progress=dot $3 $url
+  wget --progress=dot $url >/dev/null 2>&1
+  #wget $3 $url
 }
 
 installMysql() 
@@ -90,7 +90,7 @@ downloadJdks()
   if [ ! -e $jdk ] 
   then
     indent; echo "There is no $jdk"
-    indent; indent; download "$jdk" "http://download.oracle.com/otn-pub/java/jdk/8u112-b15/$jdk" '--no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie"'
+    indent; indent; wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u112-b15/$jdk
     if [ ! -e $jdk ] 
     then
         indent; indent; echo "Failed to download $jdk"
@@ -107,7 +107,7 @@ downloadJdks()
   if [ ! -e $jdk ] 
   then
     indent; echo "There is no $jdk"
-    indent; indent; download "$jdk" "http://download.oracle.com/otn-pub/java/jdk/7u79-b15/$jdk" '--no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie"'
+    indent; indent; wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/7u79-b15/$jdk
     if [ ! -e $jdk ] 
     then
         indent; indent; echo "Failed to download $jdk"

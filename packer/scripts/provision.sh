@@ -2,16 +2,16 @@
 
 VAGRANT_DIR=/vagrant
 HOME_DIR=~/
-HOME_SERVERS_DIR=$HOME_DIR/servers
-HOME_PUBLIC_HTML_DIR=$HOME_DIR/public_html
-HOME_BIN_DIR=$HOME_DIR/bin
+HOME_SERVERS_DIR=~/servers
+HOME_PUBLIC_HTML_DIR=~/public_html
+HOME_BIN_DIR=~/bin
 
 installPackage()
 {
   local packages=$*
   echo "Installing $packages"
-  #sudo apt-get install -y $packages >/dev/null 2>&1
-  sudo apt-get install -y $packages
+  sudo apt-get install -y $packages >/dev/null 2>&1
+  #sudo apt-get install -y $packages
 }
 
 indent() 
@@ -73,7 +73,7 @@ createDirs()
   indent; echo 'Creating vagrant dir'
   mkdir $VAGRANT_DIR
   indent; echo 'Creating bin directory'
-  mkdir $HOME_BIN_DIR
+  mkdir ~/bin
   indent; echo 'Creating public_html directory'
   mkdir $HOME_PUBLIC_HTML_DIR
   chmod o+xr $HOME_PUBLIC_HTML_DIR
@@ -113,8 +113,8 @@ installJdks()
   for file in `ls jdk*.tar.gz`
   do 
     indent; echo "Extracting $file"
-    #tar xvzf ./$file >/dev/null 2>&1
-    tar xvzf ./$file
+    tar xvzf ./$file >/dev/null 2>&1
+    #tar xvzf ./$file
   done
   indent; echo 'Cleaning'
   rm jdk*.tar.gz
@@ -146,13 +146,13 @@ updateBashrc()
     echo 'Updating .bashrc'
   
     #Start of template
-    echo 'export PATH="$HOME/.jenv/bin:$PATH"' >> $HOME_DIR/.bashrc
-    echo 'eval "$(jenv init -)"' >> $HOME_DIR/.bashrc
+    echo 'export PATH="$HOME/.jenv/bin:$PATH"' >> ~/.bashrc
+    echo 'eval "$(jenv init -)"' >> ~/.bashrc
 
-    echo 'HOME_BIN="$HOME/bin"' >> $HOME_DIR/.bashrc
-    echo 'export PATH="$HOME_BIN/apache-maven/bin:$HOME_BIN/gradle/bin:$HOME_BIN/sbt/bin:$HOME_BIN/apache-ant/bin:$PATH"' >> $HOME_DIR/.bashrc
+    echo 'HOME_BIN="$HOME/bin"' >> ~/.bashrc
+    echo 'export PATH="$HOME_BIN/apache-maven/bin:$HOME_BIN/gradle/bin:$HOME_BIN/sbt/bin:$HOME_BIN/apache-ant/bin:$PATH"' >> ~/.bashrc
 
-    source $HOME_DIR/.bashrc
+    source ~/.bashrc
 }
 
 
@@ -160,8 +160,8 @@ installRuntimes()
 {
   echo 'Install runtimes using environment managers'
   indent; echo 'Install java'
-  #for jdk in `ls $HOME_BIN_DIR/ | grep jdk`; do jenv add $HOME_BIN_DIR/$jdk >/dev/null 2>&1; done
-  for jdk in `ls $HOME_BIN_DIR/ | grep jdk`; do jenv add $HOME_BIN_DIR/$jdk; done
+  #for jdk in `ls ~/bin/ | grep jdk`; do jenv add ~/bin/$jdk >/dev/null 2>&1; done
+  for jdk in `ls ~/bin/ | grep jdk`; do jenv add ~/bin/$jdk; done
   indent; echo 'Set jdk 1.8 globally'
   jenv global 1.8
 }
@@ -180,14 +180,14 @@ installingApp()
   if [[ "$file" =~ .*tar.gz$ || "$file" =~ .*tgz$ ]]
   then 
     echo " using tar"
-    #tar xvzf $file >/dev/null 2>&1
-    tar xvzf $file 
+    tar xvzf $file >/dev/null 2>&1
+    #tar xvzf $file 
   else
     if [[ "$file" =~ .*zip$ ]]
     then
       echo " using unzip"
-      #unzip $file >/dev/null 2>&1
-      unzip $file 
+      unzip $file >/dev/null 2>&1
+      #unzip $file 
     else
       echo
       indent; indent; echo "Can't extract $file. Unknown ext"
@@ -237,7 +237,7 @@ installingSbt()
 
 installingTools() 
 {
-  cd $HOME_BIN_DIR
+  cd ~/bin
   installingMvn
   installingAnt
   installingGradle
@@ -285,9 +285,9 @@ installNodeJsYeoman()
         else
             indent; echo "$nodejs is available"
     fi
-    cp -r $VAGRANT_DIR/$nodejs $HOME_BIN_DIR
+    cp -r $VAGRANT_DIR/$nodejs ~/bin
     
-    cd $HOME_BIN_DIR
+    cd ~/bin
     #install nodejs
     indent; echo "Extracting $file"
     tar xvzf $nodejs >/dev/null 2>&1
@@ -297,8 +297,8 @@ installNodeJsYeoman()
     #update bashrc
     indent; echo 'Updating .bashrc'
     
-    echo 'export PATH="$HOME_BIN_DIR/node-v7.3.0-linux-x64/lib/node_modules/:$HOME_BIN_DIR/node-v7.3.0-linux-x64/bin/:$PATH"' >>  $HOME_DIR/.bashrc
-    source $HOME_DIR/.bashrc
+    echo 'export PATH="~/bin/node-v7.3.0-linux-x64/lib/node_modules/:~/bin/node-v7.3.0-linux-x64/bin/:$PATH"' >>  ~/.bashrc
+    source ~/.bashrc
     indent; echo $PATH
     
     #install yeoman
@@ -310,7 +310,7 @@ installCommonShellScript()
 {
     mkdir ~/scripts
     cd ~/scripts
-    git clone https://github.com/tcthien/common-shell-scripts ~/.jenv >/dev/null 2>&1
+    git clone https://github.com/tcthien/common-shell-scripts >/dev/null 2>&1
     echo 'export PATH="~/scripts/common-shell-scripts/:$PATH"' >> ~/.bashrc
     echo '~/scripts/common-shell-scripts/common' >> ~/.bashrc
 }
@@ -320,10 +320,10 @@ run() {
   installPackages
   cd $VAGRANT_DIR
   downloadJdks
-  #echo "Copying jdks to $HOME_BIN_DIR" >/dev/null 2>&1
-  echo "Copying jdks to $HOME_BIN_DIR" 
-  cp -r $VAGRANT_DIR/jdk*.tar.gz $HOME_BIN_DIR
-  cd $HOME_BIN_DIR  
+  #echo "Copying jdks to ~/bin" >/dev/null 2>&1
+  echo "Copying jdks to ~/bin" 
+  cp -r $VAGRANT_DIR/jdk*.tar.gz ~/bin
+  cd ~/bin  
   installJdks
   installingTools
   installEnvManagers

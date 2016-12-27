@@ -34,8 +34,8 @@ download()
   local url=$2
   local file=$1
   echo "Downloading $file"
-  wget --progress=dot $3 $url >/dev/null 2>&1
-  #wget --progress=dot $3 $url
+  #wget --progress=dot $3 $url >/dev/null 2>&1
+  wget --progress=dot $3 $url
 }
 
 installMysql() 
@@ -127,7 +127,8 @@ installJdks()
   do 
     indent; echo "Extracting $file"
     #tar xvzf ./$file >/dev/null 2>&1
-    tar xvzf ./$file
+    file $file
+    tar xvzf $file
   done
   indent; echo 'Cleaning jdks'
   rm jdk*.tar.gz

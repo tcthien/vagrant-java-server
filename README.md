@@ -31,19 +31,7 @@ Creates server development environment for java developer
       * ```sudo service mysql status```
   * client 
     * ```mysql -u root -proot```
-* nginx (starts on boot)
-  * serves content from ```/home/vagrant/public_html``` 
-    * [http://localhost:8080](http://localhost:8080)
-    * [https://localhost:4443](https://localhost:4443)
-    * [http://192.168.100.100](http://192.168.100.100)
-    * [https://192.168.100.100](https://192.168.100.100)
-  * management (```Usage: nginx {start|stop|restart|reload|force-reload|status|configtest|rotate|upgrade}```)
-    * ```sudo service nginx stop```
-    * ```sudo service nginx start```
-    * ```sudo service nginx reload```
-    * ```sudo service nginx restart```
-    * ```sudo service nginx status```
-* tomcat 8 (starts on boot) 
+* tomcat 8 (starts on boot) (REMOVED - do not use. Will re-add shortly)
   * http://192.168.100.100:8080 (root content)
   * http://192.168.100.100/manager (manager - configuration in nginx)
   * http://192.168.100.100:8080/manager
@@ -55,15 +43,15 @@ Creates server development environment for java developer
 * svn
 * mc
 * vim
+* nodejs
+  * npm
+  * yo
 * java tools
   * mvn
   * ant
   * gradle
 * environment managers
   * [jenv](https://github.com/gcuisinier/jenv.git)
-  * [rbenv](https://github.com/sstephenson/rbenv.git)
-  * [nodenv](https://github.com/OiNutter/nodenv.git)
-  * [pyenv](https://github.com/yyuu/pyenv.git)
 * port forwarding 
   * http ```8080 (host) -> 80 (guest)```
   * https ```4443 (host) -> 443 (guest)```

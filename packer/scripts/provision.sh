@@ -35,8 +35,8 @@ download()
   local url=$2
   local file=$1
   echo "Downloading $file"
-  #wget --progress=dot $3 $url >/dev/null 2>&1
-  wget --progress=dot $3 $url
+  wget --progress=dot $3 $url >/dev/null 2>&1
+  #wget --progress=dot $3 $url
 }
 
 installMysql() 
@@ -289,10 +289,9 @@ installNodeJsYeoman()
   
     #update bashrc
     indent; echo 'Updating .bashrc'
-    cat $VAGRANT_DIR/bashrc.template >> $HOME_DIR/.bashrc
-    source $HOME_DIR/.bashrc
     
-    export PATH="$HOME_BIN_DIR/node-v7.3.0-linux-x64/lib/node_modules/:$HOME_BIN_DIR/node-v7.3.0-linux-x64/bin/:$PATH"
+    echo 'export PATH="$HOME_BIN_DIR/node-v7.3.0-linux-x64/lib/node_modules/:$HOME_BIN_DIR/node-v7.3.0-linux-x64/bin/:$PATH"' >>  $HOME_DIR/.bashrc
+    source $HOME_DIR/.bashrc
     indent; echo $PATH
     
     #install yeoman

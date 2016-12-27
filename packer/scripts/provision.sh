@@ -4,7 +4,6 @@ VAGRANT_DIR=/vagrant
 HOME_DIR=~/
 HOME_SERVERS_DIR=~/servers
 HOME_PUBLIC_HTML_DIR=~/public_html
-HOME_BIN_DIR=~/bin
 
 installPackage()
 {
@@ -91,6 +90,12 @@ downloadJdks()
   then
     indent; echo "There is no $jdk"
     indent; indent; download "$jdk" "http://download.oracle.com/otn-pub/java/jdk/8u112-b15/$jdk" '--no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie"'
+    if [ ! -e $jdk ] 
+    then
+        indent; indent; echo "Failed to download $jdk"
+    else
+        indent; indent; echo "Download successfully $jdk"
+    fi
   else
     indent; echo "$jdk is available"
   fi
@@ -102,6 +107,12 @@ downloadJdks()
   then
     indent; echo "There is no $jdk"
     indent; indent; download "$jdk" "http://download.oracle.com/otn-pub/java/jdk/7u79-b15/$jdk" '--no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie"'
+    if [ ! -e $jdk ] 
+    then
+        indent; indent; echo "Failed to download $jdk"
+    else
+        indent; indent; echo "Download successfully $jdk"
+    fi
   else
     indent; echo "$jdk is available"
   fi
@@ -116,7 +127,7 @@ installJdks()
     tar xvzf ./$file >/dev/null 2>&1
     #tar xvzf ./$file
   done
-  indent; echo 'Cleaning'
+  indent; echo 'Cleaning jdks'
   rm jdk*.tar.gz
 }
 
@@ -146,11 +157,10 @@ updateBashrc()
     echo 'Updating .bashrc'
   
     #Start of template
-    echo 'export PATH="$HOME/.jenv/bin:$PATH"' >> ~/.bashrc
+    echo 'export PATH="~/.jenv/bin:$PATH"' >> ~/.bashrc
     echo 'eval "$(jenv init -)"' >> ~/.bashrc
 
-    echo 'HOME_BIN="$HOME/bin"' >> ~/.bashrc
-    echo 'export PATH="$HOME_BIN/apache-maven/bin:$HOME_BIN/gradle/bin:$HOME_BIN/sbt/bin:$HOME_BIN/apache-ant/bin:$PATH"' >> ~/.bashrc
+    echo 'export PATH="~/bin/apache-maven/bin:~/bin/gradle/bin:~/bin/sbt/bin:~/bin/apache-ant/bin:$PATH"' >> ~/.bashrc
 
     source ~/.bashrc
 }
@@ -158,12 +168,13 @@ updateBashrc()
 
 installRuntimes()
 {
-  echo 'Install runtimes using environment managers'
-  indent; echo 'Install java'
-  #for jdk in `ls ~/bin/ | grep jdk`; do jenv add ~/bin/$jdk >/dev/null 2>&1; done
-  for jdk in `ls ~/bin/ | grep jdk`; do jenv add ~/bin/$jdk; done
-  indent; echo 'Set jdk 1.8 globally'
-  jenv global 1.8
+    cd ~/bin
+    echo 'Install runtimes using environment managers'
+    indent; echo 'Install java'
+    #for jdk in `ls ~/bin/ | grep jdk`; do jenv add ~/bin/$jdk >/dev/null 2>&1; done
+    for jdk in `ls ~/bin/ | grep jdk`; do jenv add ~/bin/$jdk; done
+    indent; echo 'Set jdk 1.8 globally'
+    jenv global 1.8
 }
 
 
@@ -299,6 +310,7 @@ installNodeJsYeoman()
     
     echo 'export PATH="~/bin/node-v7.3.0-linux-x64/lib/node_modules/:~/bin/node-v7.3.0-linux-x64/bin/:$PATH"' >>  ~/.bashrc
     source ~/.bashrc
+    export PATH="~/bin/node-v7.3.0-linux-x64/lib/node_modules/:~/bin/node-v7.3.0-linux-x64/bin/:$PATH"
     indent; echo $PATH
     
     #install yeoman
@@ -322,8 +334,8 @@ run() {
   downloadJdks
   #echo "Copying jdks to ~/bin" >/dev/null 2>&1
   echo "Copying jdks to ~/bin" 
-  cp -r $VAGRANT_DIR/jdk*.tar.gz ~/bin
-  cd ~/bin  
+  cp -rv $VAGRANT_DIR/jdk*.tar.gz ~/bin
+  cd ~/bin
   installJdks
   installingTools
   installEnvManagers

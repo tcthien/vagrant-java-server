@@ -142,7 +142,7 @@ installEnvManagers()
 updateBashrc()
 {
   echo 'Updating .bashrc'
-  cat $VAGRANT_DIR/bashrc.template >> $HOME_DIR/.bashrc
+  cat $VAGRANT_DIR/packer/scripts/bashrc.template >> $HOME_DIR/.bashrc
   source $HOME_DIR/.bashrc
 }
 

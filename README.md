@@ -182,4 +182,5 @@ Exported variables :
 ```
 
 ### Resources
+Thanks a lot [ssledz](https://github.com/ssledz/vagrant-boxes/tree/master/java-dev-environment) for valuable initial version
 For more information please visit [jenv](https://github.com/gcuisinier/jenv)

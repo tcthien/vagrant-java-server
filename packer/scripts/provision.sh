@@ -125,8 +125,8 @@ installEnvManagers()
   echo 'Installing environment managers (for Java) '
   indent; echo 'Installing jenv'
   indent; indent; echo 'Clonning from github to ~/.jenv'
-  #git clone https://github.com/gcuisinier/jenv.git ~/.jenv >/dev/null 2>&1
-  git clone https://github.com/gcuisinier/jenv.git ~/.jenv
+  git clone https://github.com/gcuisinier/jenv.git ~/.jenv >/dev/null 2>&1
+  #git clone https://github.com/gcuisinier/jenv.git ~/.jenv
   indent; indent; echo "Setting environment variables"
   export PATH="$HOME/.jenv/bin:$PATH"
   eval "$(jenv init -)"
@@ -143,9 +143,16 @@ installEnvManagers()
 
 updateBashrc()
 {
-  echo 'Updating .bashrc'
-  cat $VAGRANT_DIR/packer/scripts/bashrc.template >> $HOME_DIR/.bashrc
-  source $HOME_DIR/.bashrc
+    echo 'Updating .bashrc'
+  
+    #Start of template
+    echo 'export PATH="$HOME/.jenv/bin:$PATH"' >> $HOME_DIR/.bashrc
+    echo 'eval "$(jenv init -)"' >> $HOME_DIR/.bashrc
+
+    echo 'HOME_BIN="$HOME/bin"' >> $HOME_DIR/.bashrc
+    echo 'export PATH="$HOME_BIN/apache-maven/bin:$HOME_BIN/gradle/bin:$HOME_BIN/sbt/bin:$HOME_BIN/apache-ant/bin:$PATH"' >> $HOME_DIR/.bashrc
+
+    source $HOME_DIR/.bashrc
 }
 
 
@@ -299,6 +306,15 @@ installNodeJsYeoman()
     npm install -g yo
 }
 
+installCommonShellScript()
+{
+    mkdir ~/scripts
+    cd ~/scripts
+    git clone https://github.com/tcthien/common-shell-scripts ~/.jenv >/dev/null 2>&1
+    echo 'export PATH="~/scripts/common-shell-scripts/:$PATH"' >> ~/.bashrc
+    echo '~/scripts/common-shell-scripts/common' >> ~/.bashrc
+}
+
 run() {
   createDirs
   installPackages
@@ -317,6 +333,9 @@ run() {
   
   #install nodejs, yeoman
   installNodeJsYeoman
+  
+  #install common-shell-script
+  installCommonShellScript
 }
 
 

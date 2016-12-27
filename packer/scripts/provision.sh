@@ -82,6 +82,7 @@ createDirs()
 
 downloadJdks()
 {
+  cd ~/bin
   echo "Downloading jdks"
   
   #jdk8
@@ -120,15 +121,17 @@ downloadJdks()
 
 installJdks()
 {
+  cd ~/bin
   echo 'Installing jdks'
   for file in `ls jdk*.tar.gz`
   do 
     indent; echo "Extracting $file"
-    tar xvzf ./$file >/dev/null 2>&1
-    #tar xvzf ./$file
+    #tar xvzf ./$file >/dev/null 2>&1
+    tar xvzf ./$file
   done
   indent; echo 'Cleaning jdks'
   rm jdk*.tar.gz
+  ls
 }
 
 installEnvManagers()
@@ -157,12 +160,11 @@ updateBashrc()
     echo 'Updating .bashrc'
   
     #Start of template
-    echo 'export PATH="~/.jenv/bin:$PATH"' >> ~/.bashrc
+    echo 'export PATH="~/.jenv/bin:~/bin/apache-maven/bin:~/bin/gradle/bin:~/bin/sbt/bin:~/bin/apache-ant/bin:$PATH"' >> ~/.bashrc
     echo 'eval "$(jenv init -)"' >> ~/.bashrc
 
-    echo 'export PATH="~/bin/apache-maven/bin:~/bin/gradle/bin:~/bin/sbt/bin:~/bin/apache-ant/bin:$PATH"' >> ~/.bashrc
-
-    source ~/.bashrc
+    export PATH="~/.jenv/bin:~/bin/apache-maven/bin:~/bin/gradle/bin:~/bin/sbt/bin:~/bin/apache-ant/bin:$PATH"
+    eval "$(jenv init -)"
 }
 
 
@@ -285,9 +287,9 @@ installingServers()
 
 installNodeJsYeoman()
 {
+    cd ~/bin
     nodejs="node-v7.3.0-linux-x64.tar.gz"
     nodejsdir="node-v7.3.0-linux-x64"
-    cd $VAGRANT_DIR
     #download nodejs
     if [ ! -e $nodejs ] 
         then
@@ -296,20 +298,16 @@ installNodeJsYeoman()
         else
             indent; echo "$nodejs is available"
     fi
-    cp -r $VAGRANT_DIR/$nodejs ~/bin
-    
-    cd ~/bin
     #install nodejs
     indent; echo "Extracting $file"
     tar xvzf $nodejs >/dev/null 2>&1
-    indent; echo 'Cleaning'
+    indent; echo 'Cleaning $nodejs'
     rm $nodejs
   
     #update bashrc
     indent; echo 'Updating .bashrc'
     
     echo 'export PATH="~/bin/node-v7.3.0-linux-x64/lib/node_modules/:~/bin/node-v7.3.0-linux-x64/bin/:$PATH"' >>  ~/.bashrc
-    source ~/.bashrc
     export PATH="~/bin/node-v7.3.0-linux-x64/lib/node_modules/:~/bin/node-v7.3.0-linux-x64/bin/:$PATH"
     indent; echo $PATH
     
@@ -330,12 +328,7 @@ installCommonShellScript()
 run() {
   createDirs
   installPackages
-  cd $VAGRANT_DIR
   downloadJdks
-  #echo "Copying jdks to ~/bin" >/dev/null 2>&1
-  echo "Copying jdks to ~/bin" 
-  cp -rv $VAGRANT_DIR/jdk*.tar.gz ~/bin
-  cd ~/bin
   installJdks
   installingTools
   installEnvManagers

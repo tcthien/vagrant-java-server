@@ -70,6 +70,8 @@ installPackages()
 createDirs()
 {
   echo 'Creating directories'
+  indent; echo 'Creating vagrant dir'
+  mkdir $VAGRANT_DIR
   indent; echo 'Creating bin directory'
   mkdir $HOME_BIN_DIR
   indent; echo 'Creating public_html directory'

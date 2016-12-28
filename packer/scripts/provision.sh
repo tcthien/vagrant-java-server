@@ -90,7 +90,7 @@ downloadJdks()
   if [ ! -e $jdk ] 
   then
     indent; echo "There is no $jdk"
-    indent; indent; wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u112-b15/$jdk
+    indent; indent; wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/8u112-b15/$jdk >/dev/null 2>&1
     if [ ! -e $jdk ] 
     then
         indent; indent; echo "Failed to download $jdk"
@@ -107,7 +107,7 @@ downloadJdks()
   if [ ! -e $jdk ] 
   then
     indent; echo "There is no $jdk"
-    indent; indent; wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/7u79-b15/$jdk
+    indent; indent; wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/7u79-b15/$jdk >/dev/null 2>&1
     if [ ! -e $jdk ] 
     then
         indent; indent; echo "Failed to download $jdk"
@@ -126,9 +126,9 @@ installJdks()
   for file in `ls jdk*.tar.gz`
   do 
     indent; echo "Extracting $file"
-    #tar xvzf ./$file >/dev/null 2>&1
+    tar xvzf ./$file >/dev/null 2>&1
     file $file
-    tar xvzf $file
+    #tar xvzf $file
   done
   indent; echo 'Cleaning jdks'
   rm jdk*.tar.gz
@@ -323,7 +323,8 @@ installCommonShellScript()
     cd ~/scripts
     git clone https://github.com/tcthien/common-shell-scripts >/dev/null 2>&1
     echo 'export PATH="~/scripts/common-shell-scripts/:$PATH"' >> ~/.bashrc
-    echo '~/scripts/common-shell-scripts/common' >> ~/.bashrc
+    sudo chmod +x ~/scripts/common-shell-scripts/common
+    echo 'source ~/scripts/common-shell-scripts/common' >> ~/.bashrc
 }
 
 run() {

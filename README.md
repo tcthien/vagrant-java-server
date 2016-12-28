@@ -5,9 +5,36 @@ Creates server development environment for java developer
 * Install [Vagrant](https://www.vagrantup.com/downloads.html)
 * Navigate to project you would like to work
 ```
-    cd ~/myWorkingProject
+    cd ~/yourWorkingProject
     vagrant init tcthien/java-dev-server
     vagrant up
+```
+
+## Using this vagrant effectively
+* Mapping your source folder & maven repository folder from host to guest 
+```
+    cd ~/yourWorkingProject
+    vim Vagrantfile
+    # Copy following to your vagrant file --------------------------------
+    # 
+    Vagrant.configure("2") do |config|
+      config.vm.box = "tcthien/java-dev-server"
+
+      config.vm.synced_folder "C:/Users/admin/.m2/repository", "/share/mavenRepo"
+      config.vm.synced_folder "", "/share/source"
+      
+      config.vm.provider "virtualbox" do |vb|
+         vb.memory = "4096"
+         vb.name = "codelab-server"
+      end
+    end
+    # End file -----------------------------------------------------------
+    
+```
+* Create settings.xml in ~/.m2 & update your maven repository points to /share/mavenRepo
+* Access to your source file in
+```
+    cd /share/source
 ```
 
 ## Environment for Java Developer

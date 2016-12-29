@@ -1,0 +1,34 @@
+#!/bin/bash
+
+# Generic methods ----------------------------------------------------------------
+installPackage()
+{
+  local packages=$*
+  echo "Installing $packages"
+  sudo apt-get install -y $packages >/dev/null 2>&1
+}
+indent() 
+{
+  echo -n '    '
+}
+download()
+{
+  local url=$2
+  local file=$1
+  echo "Downloading $file"
+  wget --progress=dot $url >/dev/null 2>&1
+}
+# End Generic methods ----------------------------------------------------------------
+
+run() {
+    # Edit 1: Write method here
+}
+
+
+# Edit 2: Consider to change vagrant_codelab_provision for your case
+if [ ! -f "/var/vagrant_codelab_provision" ]; then
+  sudo touch /var/vagrant_codelab_provision
+  run
+else
+  echo "Nothing to do"
+fi

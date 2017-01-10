@@ -58,6 +58,19 @@ Creates server development environment for java developer
       * ```sudo service mysql status```
   * client 
     * ```mysql -u root -proot```
+  * Enable remote access on root:
+```
+sudo vi /etc/mysql/my.cnf
+
+#comment out line: bind-address = 127.0.0.1 as following:
+#bind-address = 127.0.0.1
+
+sudo service mysql restart
+
+mysql –u root -p
+GRANT ALL PRIVILEGES ON *.* TO root@'%' IDENTIFIED BY 'root';
+FLUSH PRIVILEGES;
+```
 * tomcat 8 (starts on boot) (REMOVED - do not use. Will re-add shortly)
   * http://192.168.100.100:8080 (root content)
   * http://192.168.100.100/manager (manager - configuration in nginx)

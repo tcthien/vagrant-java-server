@@ -327,22 +327,38 @@ installCommonShellScript()
     echo 'source ~/scripts/common-shell-scripts/common' >> ~/.bashrc
 }
 
+installDocker()
+{
+    #install docker
+    mkdir ~/tmp
+    mkdir ~/tmp/tts-configcenter
+    curl -L https://get.docker.com/ > ~/tmp/tts-configcenter/installDocker.sh
+    sudo sh ~/tmp/tts-configcenter/installDocker.sh
+    #install docker compose
+    sudo chmod 777 /usr/local/bin
+    sudo curl -L https://github.com/docker/compose/releases/download/1.8.0/docker-compose-`uname -s`-`uname -m` > /usr/local/bin/docker-compose
+    sudo chmod +x /usr/local/bin/docker-compose
+}
+
 run() {
-  createDirs
-  installPackages
-  downloadJdks
-  installJdks
-  installingTools
-  installEnvManagers
-  updateBashrc
-  installRuntimes
-  installingServers
-  
-  #install nodejs, yeoman
-  installNodeJsYeoman
-  
-  #install common-shell-script
-  installCommonShellScript
+    createDirs
+    installPackages
+    downloadJdks
+    installJdks
+    installingTools
+    installEnvManagers
+    updateBashrc
+    installRuntimes
+    installingServers
+
+    #install nodejs, yeoman
+    installNodeJsYeoman
+
+    #install common-shell-script
+    installCommonShellScript
+    
+    #install docker
+    installDocker
 }
 
 

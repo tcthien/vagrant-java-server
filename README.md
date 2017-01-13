@@ -49,10 +49,7 @@ Creates server development environment for java developer
 
 * Cassandra 3.9
   * Cassandra located under ~/bin/
-  * Execute following to start Cassandra server
-````
-    cassandra -f
-````
+  * Execute following to start Cassandra server ````    cassandra -f ````
   * Create user
 ```
 cqlsh localhost -u cassandra -p cassandra

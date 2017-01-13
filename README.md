@@ -90,14 +90,6 @@ mysql –u root -p
 GRANT ALL PRIVILEGES ON *.* TO root@'%' IDENTIFIED BY 'root';
 FLUSH PRIVILEGES;
 ```
-* tomcat 8 (starts on boot) (REMOVED - do not use. Will re-add shortly)
-  * http://192.168.100.100:8080 (root content)
-  * http://192.168.100.100/manager (manager - configuration in nginx)
-  * http://192.168.100.100:8080/manager
-  * management (```Run as /etc/init.d/tomcat <start|stop|restart>```)
-    * ```sudo service tomcat stop```
-    * ```sudo service tomcat start```
-    * ```sudo service tomcat restart```
 * git
 * svn
 * mc

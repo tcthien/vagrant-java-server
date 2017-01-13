@@ -5,6 +5,11 @@ HOME_DIR=~/
 HOME_SERVERS_DIR=~/servers
 HOME_PUBLIC_HTML_DIR=~/public_html
 
+appendToBashrc()
+{
+    echo ${1} >> ~/.bashrc
+}
+
 installPackage()
 {
   local packages=$*

@@ -340,6 +340,47 @@ installDocker()
     sudo chmod +x /usr/local/bin/docker-compose
 }
 
+installCassandra()
+{
+    # Update chmod in /bin/
+    sudo chmod 777 ~/bin/
+    echo "Installing Cassandra"
+    cd /vagrant
+    local cassandra="apache-cassandra-3.9-bin.tar.gz"
+    local cassandraFolder="apache-cassandra-3.9"
+    # Check & install cassandra ---------------------------------------------------------
+    if [ ! -e $cassandra ] 
+    then
+        indent; echo "Prepare to download $cassandra"
+        download $cassandra http://supergsego.com/apache/cassandra/3.9/$cassandra
+        file $cassandra
+    else
+        indent; echo "Nothing new to download"
+    fi
+    # Copy cassandra to ~/bin
+    cp -v $cassandra ~/bin/
+    # Extract & add cassandra to PATH
+    cd ~/bin/
+    indent; echo "Extracting ~/bin/$cassandra"
+    tar xvzf ./$cassandra >/dev/null 2>&1
+    rm -rf $cassandra
+    sudo chmod 777 ~/bin/$cassandraFolder
+        
+        # Add Cassandra home to bashrc ------------------------------------------------------
+    appendToBashrc ''
+    appendToBashrc '#Add Cassandra Home'
+    appendToBashrc 'export CASSANDRA_HOME=~/bin/apache-cassandra-3.9/'
+    appendToBashrc 'export PATH="${CASSANDRA_HOME}/bin/:$PATH"'
+}
+
+updateConfiguration()
+{
+    #Update mysql config
+    yes | sudo cp -v ~/scripts/common-shell-scripts/app-conf/my.cnf /etc/mysql/
+    #Update mysql config
+    yes | cp -v ~/scripts/common-shell-scripts/app-conf/cassandra.yaml ~/bin/apache-cassandra-3.9/conf
+}
+
 run() {
     createDirs
     installPackages
@@ -359,6 +400,12 @@ run() {
     
     #install docker
     installDocker
+    
+    #install cassandra
+    installCassandra
+    
+    #Update configuration
+    updateConfiguration
 }
 
 

@@ -47,6 +47,20 @@ Creates server development environment for java developer
     wget --no-check-certificate --no-cookies --header "Cookie: oraclelicense=accept-securebackup-cookie" http://download.oracle.com/otn-pub/java/jdk/7u79-b15/jdk-7u79-linux-x64.tar.gz
 ```
 
+* Cassandra 3.9
+  * Cassandra located under ~/bin/
+  * Execute following to start Cassandra server
+````
+    cassandra -f
+````
+  * Create user
+```
+cqlsh localhost -u cassandra -p cassandra
+create user root with password 'root' superuser;
+
+CREATE KEYSPACE keyspaceName WITH replication = {'class':'SimpleStrategy', 'replication_factor' : 3};
+```
+
 * mysql (starts on boot)
   * all character sets set to ```utf8``` 
   * server 

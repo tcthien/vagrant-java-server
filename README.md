@@ -39,7 +39,7 @@ Creates server development environment for java developer
     # End file -----------------------------------------------------------
     
 ```
-* Create settings.xml in ~/.m2 & update your maven repository points to /share/mavenRepo
+* Create ```settings.xml``` in ```~/.m2``` and update your maven repository points to ```/share/mavenRepo```
 * Access to your source file in
 ```
     cd /share/source

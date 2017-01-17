@@ -83,6 +83,7 @@ createDirs()
   chmod o+xr $HOME_PUBLIC_HTML_DIR
   mkdir $HOME_SERVERS_DIR
   indent; echo 'Creating servers directory'
+  mkdir -p ~/.m2
 }
 
 downloadJdks()
@@ -384,6 +385,9 @@ updateConfiguration()
     yes | sudo cp -v ~/scripts/common-shell-scripts/app-conf/my.cnf /etc/mysql/
     #Update mysql config
     yes | cp -v ~/scripts/common-shell-scripts/app-conf/cassandra.yaml ~/bin/apache-cassandra-3.9/conf
+    #Update maven setting
+    yes | cp -v ~/scripts/common-shell-scripts/app-conf/settings.xml ~/.m2
+    
 }
 
 run() {

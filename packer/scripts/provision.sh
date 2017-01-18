@@ -7,7 +7,7 @@ HOME_PUBLIC_HTML_DIR=~/public_html
 
 appendToBashrc()
 {
-    echo ${1} >> ~/.bashrc
+    echo ${1} >> ~/java-env
 }
 
 installPackage()
@@ -58,32 +58,36 @@ installMysql()
 
 installPackages()
 {
-  echo "Installing packages"
-  indent; echo 'apt-get update'
-  sudo apt-get update >/dev/null 2>&1
-  indent; installPackage vim
-  indent; installPackage git
-  indent; installPackage mc
-  indent; installPackage apg
-  indent; installPackage curl
-  indent; installPackage wget
-  installMysql
-
+    echo "Installing packages"
+    indent; echo 'apt-get update'
+    sudo apt-get update >/dev/null 2>&1
+    indent; installPackage vim
+    indent; installPackage git
+    indent; installPackage mc
+    indent; installPackage apg
+    indent; installPackage curl
+    indent; installPackage wget
+    installMysql
+    #install zsh & oh-my-zsh
+    installOhMyZsh
 }
 
 createDirs()
 {
-  echo 'Creating directories'
-  indent; echo 'Creating vagrant dir'
-  mkdir $VAGRANT_DIR
-  indent; echo 'Creating bin directory'
-  mkdir ~/bin
-  indent; echo 'Creating public_html directory'
-  mkdir $HOME_PUBLIC_HTML_DIR
-  chmod o+xr $HOME_PUBLIC_HTML_DIR
-  mkdir $HOME_SERVERS_DIR
-  indent; echo 'Creating servers directory'
-  mkdir -p ~/.m2
+    echo 'Creating directories'
+    indent; echo 'Creating vagrant dir'
+    mkdir $VAGRANT_DIR
+    indent; echo 'Creating bin directory'
+    mkdir ~/bin
+    indent; echo 'Creating public_html directory'
+    mkdir $HOME_PUBLIC_HTML_DIR
+    chmod o+xr $HOME_PUBLIC_HTML_DIR
+    mkdir $HOME_SERVERS_DIR
+    indent; echo 'Creating servers directory'
+    mkdir -p ~/.m2
+    
+    echo 'Creating common shell config'
+    echo "" > ~/java-env
 }
 
 downloadJdks()
@@ -164,11 +168,10 @@ installEnvManagers()
 
 updateBashrc()
 {
-    echo 'Updating .bashrc'
-  
+
     #Start of template
-    echo 'export PATH="~/.jenv/bin:~/bin/apache-maven/bin:~/bin/gradle/bin:~/bin/sbt/bin:~/bin/apache-ant/bin:$PATH"' >> ~/.bashrc
-    echo 'eval "$(jenv init -)"' >> ~/.bashrc
+    appendToBashrc 'export PATH="~/.jenv/bin:~/bin/apache-maven/bin:~/bin/gradle/bin:~/bin/sbt/bin:~/bin/apache-ant/bin:$PATH"'
+    appendToBashrc 'eval "$(jenv init -)"'
 
     export PATH="~/.jenv/bin:~/bin/apache-maven/bin:~/bin/gradle/bin:~/bin/sbt/bin:~/bin/apache-ant/bin:$PATH"
     eval "$(jenv init -)"
@@ -310,11 +313,8 @@ installNodeJsYeoman()
     tar xvzf $nodejs >/dev/null 2>&1
     indent; echo 'Cleaning $nodejs'
     rm $nodejs
-  
-    #update bashrc
-    indent; echo 'Updating .bashrc'
     
-    echo 'export PATH="~/bin/node-v7.3.0-linux-x64/lib/node_modules/:~/bin/node-v7.3.0-linux-x64/bin/:$PATH"' >>  ~/.bashrc
+    appendToBashrc 'export PATH="~/bin/node-v7.3.0-linux-x64/lib/node_modules/:~/bin/node-v7.3.0-linux-x64/bin/:$PATH"'
     export PATH="~/bin/node-v7.3.0-linux-x64/lib/node_modules/:~/bin/node-v7.3.0-linux-x64/bin/:$PATH"
     indent; echo $PATH
     
@@ -328,9 +328,9 @@ installCommonShellScript()
     mkdir ~/scripts
     cd ~/scripts
     git clone https://github.com/tcthien/common-shell-scripts >/dev/null 2>&1
-    echo 'export PATH="~/scripts/common-shell-scripts/:$PATH"' >> ~/.bashrc
+    appendToBashrc 'export PATH="~/scripts/common-shell-scripts/:$PATH"'
     sudo chmod +x ~/scripts/common-shell-scripts/common
-    echo 'source ~/scripts/common-shell-scripts/common' >> ~/.bashrc
+    appendToBashrc 'source ~/scripts/common-shell-scripts/common'
 }
 
 installDocker()
@@ -379,6 +379,13 @@ installCassandra()
     appendToBashrc 'export PATH="${CASSANDRA_HOME}/bin/:$PATH"'
 }
 
+installOhMyZsh()
+{
+    echo "Installing zsh & OhMyZsh"
+    indent; installPackage zsh
+    indent; sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
+}
+
 updateConfiguration()
 {
     #Update mysql config
@@ -387,12 +394,18 @@ updateConfiguration()
     yes | cp -v ~/scripts/common-shell-scripts/app-conf/cassandra.yaml ~/bin/apache-cassandra-3.9/conf
     #Update maven setting
     yes | cp -v ~/scripts/common-shell-scripts/app-conf/settings.xml ~/.m2
-    
 }
 
 run() {
     createDirs
+    
+    #Install some common package & oh-my-zsh
     installPackages
+    
+    #Include vagrant-java-server env variable to shell bash
+    echo '. ~/java-env' >> ~/.bashrc
+    echo '. ~/java-env' >> ~/.zshrc
+    
     downloadJdks
     installJdks
     installingTools
@@ -412,6 +425,8 @@ run() {
     
     #install cassandra
     installCassandra
+    
+    
     
     #Update configuration
     updateConfiguration

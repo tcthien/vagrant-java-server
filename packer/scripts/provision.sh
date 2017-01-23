@@ -395,7 +395,6 @@ run() {
     
     #Include vagrant-java-server env variable to shell bash
     echo '. ~/java-env' >> ~/.bashrc
-    echo '. ~/java-env' >> ~/.zshrc
     
     downloadJdks
     installJdks

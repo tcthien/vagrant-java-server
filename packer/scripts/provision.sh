@@ -68,8 +68,6 @@ installPackages()
     indent; installPackage curl
     indent; installPackage wget
     installMysql
-    #install zsh & oh-my-zsh
-    installOhMyZsh
 }
 
 createDirs()
@@ -377,13 +375,6 @@ installCassandra()
     appendToBashrc '#Add Cassandra Home'
     appendToBashrc 'export CASSANDRA_HOME=~/bin/apache-cassandra-3.9/'
     appendToBashrc 'export PATH="${CASSANDRA_HOME}/bin/:$PATH"'
-}
-
-installOhMyZsh()
-{
-    echo "Installing zsh & OhMyZsh"
-    indent; installPackage zsh
-    indent; sh -c "$(wget https://raw.githubusercontent.com/robbyrussell/oh-my-zsh/master/tools/install.sh -O -)"
 }
 
 updateConfiguration()
